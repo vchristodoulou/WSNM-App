@@ -1,0 +1,54 @@
+<div class="container h-100">
+  <div class="col-8 mx-auto">
+    <h1 class="text-center mt-2 mb-2">EXPERIMENT</h1>
+    <div *ngIf="uploadView">
+      <app-image-upload (uploaded)="onUploaded($event)"
+                        (canceled)="change_view_to_image()"></app-image-upload>
+    </div>
+    <div class="input-group row mt-4">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="selectImage">Select Image</span>
+      </div>
+      <select class="form-control" [(ngModel)]="selectedImage" (ngModelChange)="onImageChange($event)">
+        <option value="" selected></option>
+        <ng-container *ngFor="let item of nodetypesImages">
+          <optgroup [label]="item.nodetype_id">
+            <ng-container *ngFor="let image of item.images">
+              <option>{{image}}</option>
+            </ng-container>
+          </optgroup>
+        </ng-container>
+      </select>
+      <div>
+        <button class="btn btn-primary ml-3"
+                (click)="onDeleteImage()"
+                [disabled]="(selectedImage === '')">
+          Delete Image
+        </button>
+        <span class="alert alert-success alert-dismissible fade show ml-2" role="alert"
+              *ngIf="deleteStatus === 'SUCCESS'">
+          Image <!--<em><strong>{{imageName}}</strong></em>--> deleted
+          <i class="ml-2 fas fa-check"></i>
+        </span>
+        <span class="alert alert-danger alert-dismissible fade show ml-2" role="alert"
+              *ngIf="deleteStatus === 'ERROR'" >
+          Image <!--<em><strong>{{imageName}}</strong></em>--> not deleted
+          <i class="ml-2 fas fa-times"></i>
+        </span>
+        <span *ngIf="imageSelectedView">
+          <span class="ml-5 mr-5">or</span>
+          <button class="btn btn-primary"
+                  (click)="change_view_to_upload()">
+            Upload Image
+          </button>
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <app-nodes [slotId]="slotId" [flashImage]="selectedImage" (flashed)="onFlash()"></app-nodes>
+
+  <app-debug [slotId]="slotId"></app-debug>
+
+</div>

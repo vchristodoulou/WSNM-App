@@ -1,0 +1,56 @@
+<div class="container" style="height:100%">
+  <div class="row align-items-center" style="height:100%">
+    <div class="container">
+
+      <div class="row align-items-center text-center">
+        <div class="col-md-4 mt-2">
+          <div class="btn-group">
+            <div
+              class="btn btn-primary"
+              mwlCalendarPreviousView
+              [view]="view"
+              [(viewDate)]="viewDate"
+            >
+              Previous
+            </div>
+            <div
+              class="btn btn-outline-secondary"
+              mwlCalendarToday
+              [(viewDate)]="viewDate"
+            >
+              Today
+            </div>
+            <div
+              class="btn btn-primary"
+              mwlCalendarNextView
+              [view]="view"
+              [(viewDate)]="viewDate"
+            >
+              Next
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mt-2">
+          <h3>{{ viewDate | calendarDate:('monthViewTitle'):'en' }}</h3>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+
+      <div class="row justify-content-center" style="margin:40px 0">
+        <div class="col-md-12">
+          <div id="calendar-parent">
+            <mwl-calendar-month-view
+              [viewDate]="viewDate"
+              [events]="events"
+              (dayClicked)="dayClicked($event.day.date)"
+              (beforeViewRender)="beforeMonthViewRender($event)"
+            >
+            </mwl-calendar-month-view>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

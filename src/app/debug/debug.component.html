@@ -1,0 +1,47 @@
+<hr>
+
+<h2 class="text-center">Debug Channel</h2>
+
+<div class="row">
+  <textarea #dataChannel [ngModel]="channelData" [style.background-color]="'black'"
+            [style.color]="'white'"
+            class="form-control" aria-label="debug-channel" rows="10" disabled></textarea>
+</div>
+
+<div class="row mt-1">
+
+  <button class="btn btn-primary"
+          (click)="onDebugStart()">
+    Start Debug Channel View
+  </button>
+  <button class="btn btn-primary ml-2"
+          (click)="onDebugEnd()"
+          [disabled]="(!debugFlag)">
+    Stop Debug Channel View
+  </button>
+  <button class="btn btn-primary ml-2"
+          (click)="onDownloadLog()">
+    Download Debug Log
+  </button>
+  <span class="ml-3" style="color:red;" *ngIf="downloadRes === 'ERROR'">Download error
+    <i class="ml-2 fas fa-times"></i>
+  </span>
+
+  <button class="btn btn-primary ml-2"
+          (click)="onClearLog()">
+    Clear Log
+  </button>
+  <span class="ml-3" style="color:green;" *ngIf="clearRes === 'SUCCESS'">Log cleared
+    <i class="fas fa-check ml-2"></i>
+  </span>
+  <span class="ml-3" style="color:red;" *ngIf="clearRes === 'ERROR'">Log not cleared
+    <i class="ml-2 fas fa-times"></i>
+  </span>
+
+  <button class="btn btn-primary pull-right ml-auto"
+          *ngIf="channelData"
+          (click)="onClearView()">
+    ClearText
+  </button>
+
+</div>

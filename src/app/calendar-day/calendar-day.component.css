@@ -1,0 +1,12 @@
+.cal-day-segment-disabled, .cal-day-segment-disabled:hover {
+  background-color: grey !important;
+  cursor: not-allowed;
+}
+
+.bg-pink {
+  background-color: hotpink !important;
+}
+
+#calendar-parent{
+  box-shadow: 0 8px 15px 0 rgba(0,0,0,0.2);
+}

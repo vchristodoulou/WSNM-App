@@ -1,0 +1,57 @@
+<div class="container" style="height:100%">
+  <div class="row"
+       *ngIf="!isEmptyObject(slots); else elseBlock">
+
+    <div class="container">
+
+      <div class="row justify-content-center">
+        <h1>Your Timeslots</h1>
+      </div>
+
+      <div class="row text-center">
+        <div class="col-md-3"
+             *ngFor="let slot of slots">
+          <div class="card mt-4">
+            <h5 class="card-header">Time slot</h5>
+            <div class="card-body">
+              <p class="card-text">From {{slot.start.getDate()}}/{{slot.start.getMonth() + 1}}/{{slot.start.getFullYear()}}
+                {{pad(slot.start.getHours())}}:{{pad(slot.start.getMinutes())}}</p>
+              <p class="card-text">To {{slot.end.getDate()}}/{{slot.end.getMonth() + 1}}/{{slot.end.getFullYear()}}
+                {{pad(slot.end.getHours())}}:{{pad(slot.end.getMinutes())}}</p>
+            </div>
+            <hr style = "width: 70%;margin:auto;">
+            <div class="card-body">
+              <div *ngIf="experiment_valid_time(slot); then thenBlock else elseBlock"></div>
+              <ng-template #thenBlock>
+                <button class="btn btn-primary"
+                        (click)="check_slot_start($event, slot)"
+                        [disabled]="!experiment_valid_time(slot)">
+                  Start Experiment
+                  <i class="ml-2 fas fa-play"></i>
+                </button>
+              </ng-template>
+              <ng-template #elseBlock>
+                <button class="btn btn-primary"
+                        (click)="check_slot_start($event, slot)"
+                        [disabled]="!experiment_valid_time(slot)">
+                  Start Experiment
+                </button>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #elseBlock>
+  <div class="row text-center align-items-center justify-content-center" style="height:100%">
+      <div class="d-flex">
+        <div class="jumbotron" id="jumbo" style="width: 100%;">
+          <h1 class="display-3">No slots reserved</h1>
+        </div>
+      </div>
+  </div>
+</ng-template>

@@ -1,0 +1,131 @@
+<div *ngIf="!isEmptyObject(nodes)">
+  <div class="row">
+    <hr class="col-12">
+  </div>
+  <div class="row">
+    <div class="col">
+      <h2 class="text-xl-center">
+        Nodes
+      </h2>
+      <div class="accordion" id="accordionNodes">
+        <div class="card"
+             *ngFor="let node of nodes">
+          <div class="card-header container-fluid" [id]="'heading_'+node._id">
+            <div class="form-check form-check-inline">
+
+              <div class="spinner-border spinner-border-sm mr-2" role="status"
+                *ngIf="node.spinner">
+                <span class="sr-only">Loading...</span>
+              </div>
+
+              <input class="form-check-input" type="checkbox"
+                     [checked]="node.checked"
+                     (change)="onChange(node)"/>
+
+              <button class="btn btn-link" type="button" data-toggle="collapse"
+                      [attr.data-target]="'#collapse_'+node._id"
+                      [attr.aria-controls]="'collapse_'+node._id">
+                <label [ngStyle]="{'color': getColor(node.flashed)}" class="form-check-label">
+                  Node[{{node.gateway_id}}_{{node.id}}] &nbsp;&nbsp;&nbsp;
+                  Nodetype = {{node.nodetype_id}} &nbsp;&nbsp;&nbsp;
+                  {{node.image_name}}
+                  <i class="ml-2 fas fa-check"
+                     *ngIf="node.status ==='SUCCESS'"></i>
+                  <i class="ml-2 fas fa-times"
+                     *ngIf="node.status ==='ERROR'"></i>
+                </label>
+              </button>
+
+            </div>
+          </div>
+          <div [id]="'collapse_'+node._id" class="collapse" [attr.aria-labelledby]="'heading_'+node._id" data-parent="#accordionNodes">
+            <ng-container *ngFor="let nodetype of nodetypes">
+              <div *ngIf="nodetype._id === node.nodetype_id">
+                <div class="row no-gutters text-center">
+                  <div class="col-md-12">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th class="align-middle" scope="col" colspan="2">MCU</th>
+                              <th class="align-middle" scope="col" colspan="4">MEMORY</th>
+                              <th class="align-middle" scope="col" colspan="2">RADIO</th>
+                              <th class="align-middle" scope="col"
+                                  *ngIf="nodetype.sensors.length !== 0"
+                                  [attr.colspan]="nodetype.sensors.length">SENSORS</th>
+                              <th class="align-middle" scope="col" colspan="4">LOCATION</th>
+                            </tr>
+                          </thead>
+                          <thead>
+                            <tr class="table-active">
+                              <th class="align-middle" scope="col">PLATFORM</th>
+                              <th class="align-middle" scope="col">PROCESSOR</th>
+                              <th class="align-middle" scope="col">PROGRAM</th>
+                              <th class="align-middle" scope="col">DATA</th>
+                              <th class="align-middle" scope="col">EXTERNAL FLASH</th>
+                              <th class="align-middle" scope="col">EEPROM</th>
+                              <th class="align-middle" scope="col">RF CHIP</th>
+                              <th class="align-middle" scope="col">STANDARD</th>
+                              <th class="align-middle" scope="col"
+                                  *ngFor="let sensor of nodetype.sensors">
+                                {{sensor.device}}
+                              </th>
+                              <th class="align-middle" scope="col">AREA</th>
+                              <th class="align-middle" scope="col">BUILDING</th>
+                              <th class="align-middle" scope="col">FLOOR</th>
+                              <th class="align-middle" scope="col">POSITION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="align-middle">{{nodetype.platform}}</td>
+                              <td class="align-middle">{{nodetype.processor}}</td>
+                              <td class="align-middle">{{nodetype.memory.program}}</td>
+                              <td class="align-middle">{{nodetype.memory.data}}</td>
+                              <td class="align-middle">{{nodetype.memory.external_flash}}</td>
+                              <td class="align-middle">{{nodetype.memory.EEPROM}}</td>
+                              <td class="align-middle">{{nodetype.radio.rf_chip}}</td>
+                              <td class="align-middle">{{nodetype.radio.standard}}</td>
+                              <th class="align-middle" scope="col"
+                                  *ngFor="let sensor of nodetype.sensors">
+                                {{sensor.type.join(', ')}}
+                              </th>
+                              <td class="align-middle">{{node.location.area}}</td>
+                              <td class="align-middle">{{node.location.building}}</td>
+                              <td class="align-middle">{{node.location.floor}}</td>
+                              <td class="align-middle">{{node.location.position}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3" *ngIf="!isEmptyObject(nodes)">
+  <button class="btn btn-primary ml-3"
+          (click)="onFlash()"
+          [disabled]="(flashImage === '' || checkedNodesForm.length === 0)">
+    Flash
+  </button>
+  <button class="btn btn-primary ml-2"
+          (click)="onErase()"
+          [disabled]="(checkedNodesForm.length === 0)">
+    Erase
+  </button>
+  <button class="btn btn-primary ml-2"
+          (click)="onReset()"
+          [disabled]="(checkedNodesForm.length === 0)">
+    Reset
+  </button>
+</div>
+

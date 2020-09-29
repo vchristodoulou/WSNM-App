@@ -1,0 +1,47 @@
+<div class="container" style="height:100%">
+
+  <div *ngIf="defaultView" style="height:100%">
+
+    <div class="row align-items-center" style="height:100%">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <h1 class="text-center">Binary Images Menu</h1>
+          </div>
+        </div>
+
+        <div class="row align-items-center mt-5">
+          <div class="col-md-6 text-right">
+            <button class="btn btn-primary"
+                    (click)="change_view_to_upload()">
+              Upload Image
+              <i class="ml-2 fas fa-upload"></i>
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger"
+                    (click)="change_view_to_delete()">
+              Delete Image
+              <i class="ml-2 fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row align-items-center" style="height:100%"
+       *ngIf="uploadView">
+    <div class="col-6 mx-auto">
+      <app-image-upload (canceled)="onUploadCanceled()"></app-image-upload>
+    </div>
+  </div>
+
+  <div class="row align-items-center" style="height:100%"
+       *ngIf="deleteView">
+    <div class="col-6 mx-auto">
+      <app-image-delete (canceled)="onDeleteCanceled()"></app-image-delete>
+    </div>
+  </div>
+
+</div>

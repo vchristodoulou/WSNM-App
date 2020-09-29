@@ -1,0 +1,54 @@
+<div class="card mt-4">
+  <h5 class="card-header text-center">Delete Image</h5>
+  <div class="card-body">
+    <div class="input-group row mt-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="selectImage">Select Image</span>
+      </div>
+      <select class="form-control" [(ngModel)]="selectedImage">
+        <option value="" selected disabled hidden></option>
+        <ng-container *ngFor="let item of nodetypesImages">
+          <optgroup [label]="item.nodetype_id">
+            <ng-container *ngFor="let image of item.images">
+              <option>{{image}}</option>
+            </ng-container>
+          </optgroup>
+        </ng-container>
+      </select>
+    </div>
+
+    <hr class="mt-3" style="width: 70%;margin:auto;">
+
+    <div *ngIf="deleteStatus === 'SUCCESS'" class="row alert alert-success alert-dismissible fade show mt-2 p-1" role="alert">
+      <p class="text-center" style="margin:auto;">
+        Image <em><strong>{{imageName}}</strong></em> deleted
+        <i class="ml-2 fas fa-check"></i>
+      </p>
+    </div>
+    <div *ngIf="deleteStatus === 'ERROR'" class="row alert alert-danger alert-dismissible fade show mt-2 p-1" role="alert">
+      <p class="text-center" style="margin:auto;">
+        Image <em><strong>{{imageName}}</strong></em> not deleted
+        <i class="ml-2 fas fa-times"></i>
+      </p>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6 text-right">
+        <button class="btn btn-danger ml-1"
+                (click)="onDeleteImage()"
+                [disabled]="(selectedImage === '')">
+          Delete
+          <i class="ml-2 fas fa-trash-alt"></i>
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-outline-dark" (click)="onCancel()">
+          Cancel
+          <i class="ml-2 fas fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
