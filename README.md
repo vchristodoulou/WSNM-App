@@ -13,7 +13,7 @@
     - `sudo npm install` (from root dir)
 
 ## Configuration
-- `env.ts`
+- `src/app/env.ts`
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
